@@ -1,11 +1,11 @@
 package com.link.entity;
 
+import com.link.enums.AuthProvider;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.security.AuthProvider;
 import java.time.LocalDateTime;
 import java.util.List;
 

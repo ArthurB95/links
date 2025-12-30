@@ -43,7 +43,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             throw new RuntimeException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
         }
 
-        String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
+        String targetUrl = redirectUri.orElse(getAppDefaultTargetUrl());
 
         String token = tokenProvider.createToken(authentication);
 
@@ -52,7 +52,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .build().toUriString();
     }
 
-    protected String getDefaultTargetUrl() {
+    protected String getAppDefaultTargetUrl() {
         return appProperties.getOauth2().getAuthorizedRedirectUris().get(0);
     }
 

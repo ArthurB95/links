@@ -1,5 +1,6 @@
 package com.link.service;
 
+import com.link.dto.request.ShortenedLinkRequest;
 import com.link.dto.response.ShortenedLinkResponse;
 import com.link.entity.LinkClick;
 import com.link.entity.ShortenedLink;
@@ -39,7 +40,7 @@ public class LinkService {
     }
 
     @Transactional
-    public ShortenedLinkResponse createLink(Long userId, ShortenedLinkResponse request) {
+    public ShortenedLinkResponse createLink(Long userId, ShortenedLinkRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
