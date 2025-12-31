@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Sparkles, Mail } from "lucide-react";
-import { toast } from "sonner";
+import { Sparkles } from "lucide-react";
 
 interface LoginPageProps {
   onLogin: () => void;
@@ -8,19 +7,14 @@ interface LoginPageProps {
 
 export function LoginPage({ onLogin }: LoginPageProps) {
   const navigate = useNavigate();
+  const API_BASE_URL = "http://localhost:8080";
 
   const handleGoogleLogin = () => {
-    // Simulação de login com Google
-    toast.success("Login com Google realizado com sucesso!");
-    onLogin();
-    navigate("/dashboard");
+    window.location.href = `${API_BASE_URL}/oauth2/authorize/google`;
   };
 
   const handleFacebookLogin = () => {
-    // Simulação de login com Facebook
-    toast.success("Login com Facebook realizado com sucesso!");
-    onLogin();
-    navigate("/dashboard");
+     alert("Configuração do Facebook pendente no Backend");
   };
 
   return (
@@ -98,23 +92,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-200"></div>
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500">
-                  ou
-                </span>
-              </div>
             </div>
-
-            {/* Email Login (Optional) */}
-            <button
-              onClick={() =>
-                toast.info("Login com email em breve!")
-              }
-              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:shadow-lg hover:scale-102 transition-all"
-            >
-              <Mail className="w-5 h-5" />
-              <span>Continuar com Email</span>
-            </button>
           </div>
 
           {/* Terms */}

@@ -43,7 +43,7 @@ export function BioPage() {
   };
 
   const copyBioPageUrl = () => {
-    const url = `https://linkhub.io/${profileName.toLowerCase().replace(/\s+/g, '-')}`;
+    const url = `http://localhost:8080/${profileName.toLowerCase().replace(/\s+/g, '-')}`;
     navigator.clipboard.writeText(url);
     toast.success('URL copiada para área de transferência!');
   };
