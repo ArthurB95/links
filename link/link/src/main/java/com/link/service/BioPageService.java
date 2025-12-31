@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class BioPageService {
     private final BioLinkRepository bioLinkRepository;
     private final UserRepository userRepository;
 
-    @Transactional(readOnly = true)
+    @Transactional
     public BioPageResponse getMyBioPage(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -62,7 +63,10 @@ public class BioPageService {
         link.setBioPage(bioPage);
         link.setTitle(request.getTitle());
         link.setUrl(request.getUrl());
-        link.setPosition(request.getPosition() != null ? request.getPosition() : bioPage.getLinks().size());
+
+        int currentSize = (bioPage.getLinks() == null) ? 0 : bioPage.getLinks().size();
+        link.setPosition(request.getPosition() != null ? request.getPosition() : currentSize);
+
         link.setIsActive(true);
         link.setClickCount(0L);
 
@@ -173,9 +177,12 @@ public class BioPageService {
         response.setCreatedAt(bioPage.getCreatedAt());
         response.setUpdatedAt(bioPage.getUpdatedAt());
 
-        List<BioLinkResponse> links = bioPage.getLinks().stream()
-                .map(this::mapToLinkDTO)
-                .collect(Collectors.toList());
+        List<BioLinkResponse> links = (bioPage.getLinks() == null) ?
+                Collections.emptyList() :
+                bioPage.getLinks().stream()
+                        .map(this::mapToLinkDTO)
+                        .collect(Collectors.toList());
+
         response.setLinks(links);
 
         return response;
