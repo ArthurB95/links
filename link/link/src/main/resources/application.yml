@@ -1,4 +1,25 @@
+server:
+  port: 8080
+
 spring:
+  application:
+    name: linkhub-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/linkhub
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
   security:
     oauth2:
       client:
@@ -21,9 +42,15 @@ spring:
 
 app:
   auth:
-    token-secret: ${JWT_SECRET}
-    token-expiration-msec: 864000000 # 10 dias
+    token-secret: ${JWT_SECRET:926D96C90030DD58429D2751AC1BDBBC1234567890ABCDEF}
+    token-expiration-msec: 864000000 # 10 days
   oauth2:
     authorized-redirect-uris:
       - http://localhost:3000/oauth2/redirect
       - https://linkhub.io/oauth2/redirect
+  cors:
+    allowed-origins:
+      - http://localhost:3000
+      - https://linkhub.io
+  link:
+    base-url: ${LINK_BASE_URL:link.io}
